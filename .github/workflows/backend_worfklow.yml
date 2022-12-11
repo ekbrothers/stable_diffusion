@@ -1,4 +1,4 @@
-name: "Terraform"
+name: "Backend Init"
 
 on:
   workflow_dispatch:
