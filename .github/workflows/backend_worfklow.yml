@@ -5,7 +5,7 @@ on:
 
 jobs:
   terraform:
-    name: "Terraform"
+    name: "Terraform Backend Init"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,6 +34,13 @@ jobs:
         # if: github.event_name == 'pull_request'
         run: terraform -chdir="./backend" plan -no-color -input=false
         continue-on-error: true
+        
+       # Add env variables for service principal
+        env:
+          ARM_CLIENT_ID: ${{ secrets.TF_VAR_ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.TF_VAR_ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.TF_VAR_ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.TF_VAR_ARM_TENANT_ID }}   
 
       - uses: actions/github-script@v6
         # if: github.event_name == 'pull_request'
