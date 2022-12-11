@@ -19,7 +19,7 @@ jobs:
 
       - name: Terraform Format
         id: fmt
-        run: terraform fmt -check -chdir=./backend
+        run: terraform fmt -check -chdir="backend/"
 
       - name: Terraform Init
         id: init
@@ -27,12 +27,12 @@ jobs:
       
       - name: Terraform Validate
         id: validate
-        run: terraform validate -no-color -chdir=./backend
+        run: terraform validate -no-color -chdir="backend/"
 
       - name: Terraform Plan
         id: plan
         if: github.event_name == 'pull_request'
-        run: terraform plan -no-color -input=false -chdir=./backend
+        run: terraform plan -no-color -input=false -chdir="backend/"
         continue-on-error: true
 
       - uses: actions/github-script@v6
@@ -64,4 +64,4 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -input=false -chdir=./backend
+        run: terraform apply -auto-approve -input=false -chdir="backend/"
